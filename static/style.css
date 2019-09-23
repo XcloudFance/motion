@@ -1,0 +1,145 @@
+a,span,div,p,span,label,input{
+	font-family: "Noto Sans SC","PingFang SC","Lantinghei SC","Microsoft YaHei",arial,"\5b8b\4f53",sans-serif, tahoma,Arial, Helvetica, sans-serif;
+	font-weight: 400;
+}
+
+.content{
+	margin: 0 auto;
+	max-width: 350px;
+	width: 350px;
+}
+
+.reg-form{
+    clear: both;
+    margin-bottom: 16px;
+    zoom: 1;
+	height: 40px;
+}
+
+.form-item{
+	
+}
+
+.form-focus{
+	height: 100%;
+	width: 100%;
+	visibility: hidden;
+	opacity: 0;
+	background-color: rgba(0,0,0,0.75);
+	position: absolute;
+	top: 0;
+	left: 0;
+	transition: all 200ms ease-out;
+}
+
+.form-input{
+	display: block;
+	float: left;
+	height: 16px;
+	width: 320px;
+	padding: 10px 8px;
+	margin-right: 6px;
+	border: 1px solid #ddd;
+	font-size: 13px;
+	color: #666;
+	transition: all .15s ease-out;
+	outline: 0; 
+	border-radius: 3px;
+}
+
+.form-input:focus{
+	border: 1px solid rgba(0,0,0,0.45);
+}
+
+.form-input-ve{
+	display: block;
+	position: relative;
+	float: left;
+	height: 16px;
+	width: 150px;
+	padding: 10px 8px;
+	margin-right: 20px;
+	border: 1px solid #ddd;
+	font-size: 13px;
+	color: #666;
+	transition: all .15s ease-out;
+	outline: 0; 
+	border-radius: 2px;
+}
+
+.form-input-ve:focus{
+	border: 1px solid rgba(0,0,0,0.45);
+}
+
+.form-input-ve-bu{
+	font-size: 16px;
+	border: 0;
+	border-radius: 2px;
+	width: 150px;
+	height: 38px;
+	background-color: #4d4d4d;
+	transition: all .2s ease;
+	cursor: pointer;
+	padding: 1px 10px;
+	margin-right: 10px;
+	color: #ffffff;
+	border-redius: 2px;
+	font-size: 14px;
+}
+
+.form-input-ve-bu-dis{
+	font-size: 16px;
+	border: 0;
+	border-radius: 2px;
+	width: 150px;
+	height: 38px;
+	background-color: #999;
+	transition: all .2s ease;
+	cursor: pointer;
+	padding: 1px 10px;
+	margin-right: 10px;
+	color: #ddd;
+	border-redius: 2px;
+	font-size: 14px;
+}
+
+.form-button{
+	font-size: 16px;
+	border: 0;
+	border-radius: 2px;
+	width: 338px;
+	height: 40px;
+	background-color: #00bc12;
+	transition: all .2s ease;
+	cursor: pointer;
+	padding: 1px 10px;
+	margin-right: 10px;
+	color: white;
+	outline: 0;
+}
+
+.form-button:hover{
+	background-color: #5DBD14;
+}
+
+.form-button:active{
+	background-color: #009a12;
+}
+
+.error-msg{
+	width: 320px;
+	padding: 10px 8px;
+	height: 22px;
+	font-size: 15px;
+	border: 1px solid #cc0b0b;
+	color: #c30909;
+}
+
+.success-msg{
+	width: 320px;
+	padding: 10px 8px;
+	height: 22px;
+	font-size: 15px;
+	border: 1px solid #cc0b0b;
+	color: #c30909;
+}

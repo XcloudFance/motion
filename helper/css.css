@@ -1,0 +1,77 @@
+a,span,div,p,span{
+	font-family: "PingFang SC","Lantinghei SC","Microsoft YaHei",arial,"\5b8b\4f53",sans-serif, tahoma,Arial, Helvetica, sans-serif;
+}
+
+.top-title{
+	font-weight: bold;
+	font-size: 19px;
+}
+
+a{
+    color: inherit;
+    text-decoration: none;
+	cursor: pointer;
+}
+
+.side-bar ul{
+	font-size: 14px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.bar-active{
+	padding-left: 12px!important;
+	background-color: #f2f2f2;
+	border-bottom: 2px solid #C2C2C2;
+}
+
+.side-bar ul li{
+	font-size: 14px;
+    list-style: none;
+	padding-left: 4px;
+	transition: all .1s ease;
+	cursor: pointer;
+}
+
+.side-bar ul li:hover{
+	padding-left: 8px;
+}
+
+
+.side-bar{
+	margin-top: 24px;
+	margin-left: 60px;
+	display: inline-block;
+	width: 215px;
+	color: #333;
+    height: 35px;
+    line-height: 35px;
+	float: left;
+}
+
+.content{
+	border-left: 1px solid rgba(0,0,0,0.25);
+    display: inline-block;
+    width: 800px;
+    height: auto;
+    float: left;
+	height: 580px;
+}
+
+.q-list {
+	list-style: none;
+	margin: 35px 40px;
+	line-height: 45px;
+	padding: 0;
+}
+
+.q-list a{
+	transition: all .05s ease;
+	padding-left: 0px;
+	font-size: 18px;
+}
+
+.q-list a:hover{
+	padding-left: 2px;
+}

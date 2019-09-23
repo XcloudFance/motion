@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link href="../css/frame.css" rel="stylesheet"/>
+		<!-- <link href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:100,300,400,500,700,900" rel="stylesheet"/> -->
+		<link href="style.css" rel="stylesheet"/>	
+		<link href="laydate.css" rel="stylesheet"/>
+		<script src="jq.js"></script>
+		<script src="laydate.js"></script>
+	</head>
+	<body>
+		<div style="height: 100%;"> 
+			<div class="content">
+				<div>
+					<h2>注册</h2>
+					<p class="reg-form">
+						<input class="form-input" type="text" id="user_input" placeholder="用户名"/>
+					</p>
+					<p class="reg-form">
+						<input class="form-input" type="password" id="pass_input" placeholder="密码"/>
+					</p>
+					<p class="reg-form">
+						<input class="form-input" type="password" id="inpass_input" placeholder="请再输入一次密码"/>
+					</p>
+					<p class="reg-form">
+						<input class="form-input" type="text" id="email_input" placeholder="邮箱"/>
+					</p>
+					<p class="reg-form">
+						<input class="form-input" type="text" id="laydateInput" placeholder="生日" />
+						<div class="select-date" style="margin-top: -16px;margin-bottom: 16px;">
+							<div class="select-date-header">
+								<ul class="heade-ul">
+									<li class="header-item header-item-one">
+										<select name="" id="yearList"></select>
+									</li>
+									<li class="header-item header-item-two" onselectstart="return false">
+										<select name="" id="monthList"></select>
+									</li>
+									<li class="header-item header-item-three" onselectstart="return false" >
+										<span class="reback">回到今天</span>
+									</li>
+								</ul>
+							</div>
+							<div class="select-date-body">
+								<ul class="week-list">
+									<li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li>
+								</ul>
+								<ul class="day-tabel"></ul>
+							</div>
+							<span style="line-height: 34px;margin-left: 20px;">选择生日</span>
+						</div>
+					</p>
+					<p class="reg-form">
+						<input class="form-input-ve" type="text" id="ve_input" placeholder="请输入验证码"/>
+						<input class="form-input-ve-bu" id="ve_button" style="transition: all .2s ease-out;" type="button" value="获取验证码" onclick="pullcode()"/>
+					</p>
+					<p id="u_a" class="error-msg" style="display: none;"> 发生了错误 请重试 </p>
+					<p class="reg-form" style="margin-top: 16px;">
+						<input class="form-button" type="button" value="注册" onclick="start()"/>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="form-focus" id="form_focus" data-bm="24"></div>
+	</body>
+	<script>
+		var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+		var eckt,ecktn;
+		function al(a,b){
+			if(a==true){
+				document.getElementById('u_a').style.display = 'none';
+			}else{
+				document.getElementById('u_a').style.display = 'block';
+				document.getElementById('u_a').innerText = b;
+			}
+		}
+		
+		function al2(a,b){
+			if(a==true){
+				document.getElementById('u_b').style.display = 'none';
+			}else{
+				document.getElementById('u_b').style.display = 'block';
+				document.getElementById('u_b').innerText = b;
+			}
+		}
+		
+		$(".form-input").on("click",function(){
+			al(true);
+		});
+		
+		function start(){
+			if(document.getElementById('user_input').value==""){
+				al(false,'请输入用户名')
+				return false;
+			}else if(document.getElementById('pass_input').value==""){
+				al(false,'请输入密码')
+				return false;
+			}else if(document.getElementById('pass_input').value != document.getElementById('inpass_input').value){
+				al(false,'两次密码不符')
+				return false;
+			}else if(document.getElementById('email_input').value==""){
+				al(false,'邮箱未输入')
+				return false;
+			}else if(document.getElementById('laydateInput').value==""){
+				al(false,'生日未输入')
+				return false;
+			}else if(document.getElementById('ve_input').value==""){
+				al(false,'请输入验证码')
+				return false;
+			}
+			
+			$.ajax({
+				url: "/signup",     // + (new Date()).getTime(), // 加随机数防止缓存
+				type: "post",
+				dataType: "json",
+				data:{
+					username:document.getElementById('user_input').value,
+					password:document.getElementById('pass_input').value,
+					email:document.getElementById('email_input').value,
+					code:document.getElementById('ve_input').value,
+					born:document.getElementById('laydateInput').value
+				},
+				success: function (data) {
+					al(false,data);
+					if(typeof(data)!="object"){
+						var a=JSON.parse(data);
+						if(a.id==6){
+							location.href="/registercorrect?id="+a.user; //填入你要跳转到的链接
+						}else{
+							al(false,"注册失败");
+						}
+					}else{
+						if(data.id==6){
+							location.href="/registercorrect?id="+data.user; //填入你要跳转到的链接
+						}else{
+							al(false,"注册失败");
+						}
+					}
+					//document.getElementById('form_focus').style.opacity = '0.7';
+					//document.getElementById('form_focus').style.visibility = 'visible';
+				},error:function(data){
+					al(false,"似乎出现了错误 请稍后再试");
+				}
+			});
+		}
+		
+		function pullcode(){
+			if(document.getElementById('user_input').value==""){
+				al(false,'请输入用户名');
+				return false;
+			}else if(document.getElementById('pass_input').value==""){
+				al(false,'请输入密码');
+				return false;
+			}else if(document.getElementById('pass_input').value != document.getElementById('inpass_input').value){
+				al(false,'两次密码不符');
+				return false;
+			}
+			
+			if(document.getElementById('email_input').value==""){
+				al(false,'邮箱未填');
+				return false;
+			}
+			
+			if(reg.test(document.getElementById('email_input').value)){
+				$.ajax({
+					url: "/code",  // + (new Date()).getTime(), // 加随机数防止缓存
+					type: "post",
+					dataType: "json",
+					data:{
+						username:document.getElementById('user_input').value,
+						email:document.getElementById('email_input').value
+					},
+					complete: function(){
+						$('#ve_button').addClass("form-input-ve-bu-dis");
+						$("#ve_button").val('请稍后...');
+						ecktn = 10;
+						eckt = setInterval("time_del()",1000);
+					},
+					success: function (data) {
+						//al(false,data);
+						if(typeof(data)!="object"){
+							var a=JSON.parse(data);
+							if(a.id==4){
+								al(true);
+							}else{
+								al(false,"邮箱验证出错");
+							}
+						}else{
+							if(data.id==4){
+								al(true);
+							}else{
+								al(false,"邮箱验证出错");
+							}
+						}
+					},error:function(data){
+						al(false,"似乎出现了错误 请稍后再试");
+						clearInterval(ecktn);
+					}
+				});
+			}else{
+				al(false,'邮箱不正确!');
+			}
+		}
+		
+		function time_del() {
+			if (ecktn > 0) {
+				$('#ve_button').removeClass("form-input-ve-bu");
+				$("#ve_button").val(ecktn + 's 后可再次获取');
+				ecktn --;
+			} else {
+				$("#ve_button").addClass("form-input-ve-bu");
+				$("#ve_button").val('获取验证码');
+				$('#ve_button').removeClass("form-input-ve-bu-dis");
+				clearInterval(ecktn);
+			}
+		}
+	</script>
+</html>

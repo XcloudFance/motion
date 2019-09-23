@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link href="../css/frame.css" rel="stylesheet"/>
+		<link href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:100,300,400,500,700,900" rel="stylesheet"/>
+		<link href="style.css" rel="stylesheet"/>
+		<script src="jq.js"></script>
+	</head>
+	<body>
+		<div style="height: 100%;"> 
+			<div class="content">
+				<div>
+					<h2>登录</h2>
+					<p class="reg-form">
+						<input class="form-input" type="text" id="user_input" placeholder="用户名/邮箱"/>
+					</p>
+					<p class="reg-form">
+						<input class="form-input" type="password" id="pass_input" placeholder="密码"/>
+					</p>
+					<p>
+						<input class="form-checkbox" id="isrem_input" type="checkbox"/>
+						<label for="color-input-red"></label >
+						<span style="font-size: 15px;">记住我的登陆状态</span>
+					</p>
+					<p style="font-size: 14px;">没有帐号?还不快 <a href="register.html">注册</a> !</p>
+					<p id="u_a" class="error-msg" style="display: none;"> 发生了错误 请重试 </p>
+					<p id="u_b" class="success-msg" style="display: none;">  </p>
+					<p class="reg-form">
+						<input class="form-button" type="button" value="登录" onclick="start()"/>
+					</p>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		function start(){
+			if(document.getElementById('user_input').value==""){
+				al(false,'请输入用户名')
+				return false;
+			}else if(document.getElementById('pass_input').value==""){
+				al(false,'请输入密码')
+				return false;
+			}
+			
+			function al(a,b){
+				if(a==true){
+					document.getElementById('u_a').style.display = 'none';
+				}else{
+					document.getElementById('u_a').style.display = 'block';
+					document.getElementById('u_a').innerText = b;
+				}
+			}
+			
+			function al2(a,b){
+				if(a==true){
+					document.getElementById('u_b').style.display = 'none';
+				}else{
+					document.getElementById('u_b').style.display = 'block';
+					document.getElementById('u_b').innerText = b;
+				}
+			}
+			
+			$.ajax({
+				url: "/signin", //?t=" + (new Date()).getTime(), // 加随机数防止缓存
+				type: "post",
+				dataType: "json",
+				data:{
+					username:document.getElementById('user_input').value,
+					password:document.getElementById('pass_input').value
+					//,isrem:document.getElementById('isrem_input').checked
+				},
+				success: function (data) {
+					if(typeof(data)!="object"){
+						var a=JSON.parse(data);
+						if(a.id == 4){
+							al(true);
+							al2(false,"登陆成功");
+						}else if(a.id == 5){
+							al2(true);
+							al(false,"登陆失败");
+						}else{
+							al2(true);
+							al(false,"未知错误");
+						}
+					}else{
+						if(data.id == 4){
+							al(true);
+							al2(false,"登陆成功");
+						}else if(data.id == 5){
+							al2(true);
+							al(false,"登陆失败");
+						}else{
+							al2(true);
+							al(false,"未知错误");
+						}
+					}
+					
+					//console.log(data)
+				},error:function(data){
+					al(false,data);
+				}
+			});
+		}
+	</script>
+	<!-- <script src="alert.js"></script> -->
+</html>

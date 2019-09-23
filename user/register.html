@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>html,body { height: 100%;margin: 0; padding: 0;line-height: 21px;}</style>
+		<link href="style.css" rel="stylesheet"/>
+		<link href="frame.css" rel="stylesheet"/>
+		<script src="jq.js"></script>
+	</head>
+	<body>
+		<div style="height: 100%;"> 
+			<div class="g-col-4">
+				&nbsp;
+			</div>
+			<div class="g-col-4">
+				<div style="text-align: left;" class="in-frame">
+					<h2>注册</h2>
+					<div class="in-frame">
+						<div class="form-div">
+							<input type="text" class="form-input" id="user_input" placeholder="用户名/邮箱/手机"/>
+						</div>
+						<div class="form-div">
+							<input type="password" class="form-input" id="pass_input" placeholder="密码"/>
+						</div>
+						<div>
+							<input class="submit-button" type="button" value="注册" onclick="start()"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="g-col-4">
+				&nbsp;
+			</div>
+		</div>
+	</body>
+	<script>
+		function start(){
+			if(document.getElementById('user_input').value==""){
+				alert('请输入用户名')
+				return false;
+			}else if(document.getElementById('pass_input').value==""){
+				alert('请输入密码')
+				return false;
+			}
+			
+			$.ajax({
+				url: "http://localhost/index.php?t=" + (new Date()).getTime(), // 加随机数防止缓存
+				type: "post",
+				dataType: "json",
+				data:{
+					user:document.getElementById('user_input').value,
+					pass:document.getElementById('pass_input').value
+				},
+				success: function (data) {
+					alert(data)
+					//console.log(data)
+				}
+			});
+		}
+	</script>
+</html>
